@@ -1,10 +1,19 @@
-interface Box {
-    height: number;
-    width: number;
+function f() {
+    console.log("f() : evaluated");
+    return function (target, propertyKey: string, descriptor: PropertyDecorator){
+        console.log("f(): called");
+    }
 }
 
-interface Box {
-    scale: number;
+function g() {
+    console.log("g(): evaluated");
+    return function (target, propertyKey: string, descriptor: PropertyDecorator){
+        console.log("g(): called");
+    }
 }
 
-let b:Box = {height: 5, width: 6, scale: 1};
+class C {
+    @f()
+    @g()
+    method(){ }
+}
