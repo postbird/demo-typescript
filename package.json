@@ -1,0 +1,39 @@
+{
+  "name": "gulp-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/postbird/demo-typescript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/postbird/demo-typescript/issues"
+  },
+  "homepage": "https://github.com/postbird/demo-typescript#readme",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^10.0.0",
+    "gulp": "^4.0.0",
+    "gulp-typescript": "^5.0.0",
+    "gulp-util": "^3.0.8",
+    "typescript": "^3.3.3333",
+    "watchify": "^3.11.1"
+  },
+  "dependencies": {
+    "browserify": "^16.2.3",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "tsify": "^4.0.1",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}
