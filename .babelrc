@@ -1,12 +1,13 @@
 {
-    "presets":["react",
+    "presets":["@babel/preset-react",
         [
-            "env", {
+            "@babel/preset-env", {
                 "modules": false,
                 "targets": {
                 "browsers": ["last 2 Chrome versions","IE >= 9"]
                 }
             }
-        ]
+        ],
+        "@babel/preset-typescript"
     ]
 }

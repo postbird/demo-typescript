@@ -1,32 +1,32 @@
 const path = require('path');
-const glob = require('glob');
-const uglifyjs = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const extractTextPlugin = require("extract-text-webpack-plugin");
-const PurifyCSSPlugin = require('purifycss-webpack');
-const autoprefixer = require('autoprefixer');
 
 // 公共目录
 const website = {
     publicPath: '/'
 }
 module.exports = {
-    devtool: 'eval-source-map',
+    mode: 'development',
+    devtool: 'source-map',
     entry: {
-        bundle: path.resolve(__dirname, 'src/main.js')
+        bundle: path.resolve(__dirname, 'src/main.tsx')
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/[name].js',
         publicPath: website.publicPath
     },
+    externals: {
+        "react": "React",
+        "react-dom": "ReactDOM"
+    },
     resolve: {
-        extensions: ['.js', '.jsx', '.json', '.coffee']
+        extensions: ['.js', '.jsx', '.json', '.coffee', '.tsx']
     },
     module: {
         rules: [
             {
-                test: /\.(js|jsx)/,
+                test: /\.(tsx)/,
                 exclude: /node_modules/,
                 use: [
                     {
@@ -34,77 +34,21 @@ module.exports = {
                     }
                 ]
             },
-            // css处理不进行分离
-            { test: /\.css$/, use: ['style-loader', 'css-loader', "postcss-loader"] },
-            // css编译 单独分离出css文件
-            // {
-            //     test: /\.css$/,
-            //     use: extractTextPlugin.extract({
-            //         fallback: "style-loader",
-            //         use: ["css-loader","postcss-loader"]
-            //     })
-            // },
-            // 图片处理
-            {
-                test: /\.(png|jpg|jpeg|gif|webp|svg)$/,
-                use: [{
-                    loader: 'url-loader',
-                    options: {
-                        'limit': 500,
-                        outputPath: 'images/',
-                    }
-                }]
-            },
-            // less 编译
-            {
-                test: /\.less$/,
-                // 不分离编译的css文件
-                use: ['style-loader', 'css-loader', "postcss-loader", 'less-loader']
-                // 分离css文件
-                // use: extractTextPlugin.extract({
-                //     fallback: "style-loader",
-                //     use: ['css-loader',"postcss-loader", 'less-loader']
-                // })
-            },
-            // scss 编译
-            {
-                test: /\.scss$/,
-                // 编译scss 不分离文件
-                use: ['style-loader', 'css-loader', "postcss-loader", 'sass-loader']
-                // 分离css文件
-                // use:extractTextPlugin.extract({
-                //     fallback:'style-loader',
-                //     use:['css-loader',"postcss-loader",'sass-loader']
-                // })
-            },
+            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
         ]
     },
     // 插件
     plugins: [
-        // new uglifyjs(),
         new HtmlWebpackPlugin({
             title: 'Webpack-React-Development By Postbird',
             template: 'src/index.html'
         }),
-        // 将css抽离成单个文件
-        // new extractTextPlugin("/css/index.css"),
-        // 清除未使用的css
-        // new PurifyCSSPlugin({
-        //     // 绝对路径
-        //     paths:glob.async(path.join(__dirname,'src/*.html'))
-        // })
     ],
-    // webpack-dev-server 
     devServer: {
-        //设置基本目录结构
         contentBase: path.resolve(__dirname, 'dist'),
-        //服务器的IP地址，
         host: '0.0.0.0',
-        //服务端压缩是否开启
         compress: true,
-        //配置服务端口号
         port: 8080,
-        // 实时刷新
         inline: true,
         open: 'http://127.0.0.1:8080'
     }
